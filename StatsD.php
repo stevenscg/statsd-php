@@ -5,7 +5,10 @@
  * This class generally follows the official php-example from Etsy, but moves
  * the configuration options into the main class.
  *
- * @link https://github.com/etsy/statsd/blob/master/examples/php-example.php
+ * @author Etsy https://github.com/etsy/statsd
+ * @author Chris Stevens
+ * @see https://github.com/etsy/statsd/blob/master/examples/php-example.php
+ * @link https://github.com/stevenscg/statsd-php
  **/
 class StatsD {
     /**

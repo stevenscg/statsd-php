@@ -25,6 +25,21 @@ Options
 `port` - integer - StatsD port of your carbon/graphite server
 
 
+StatsD Data Types and Class Methods
+-----------------
+
+* Counting - `increment` and `decrement`
+
+* Timing - `timing`
+
+* Sampling - supported via "sampleRate" parameter on `increment` and `decrement`
+
+* Gauges - not currently supported
+
+* Sets - not currently supported
+
+
+
 CakePHP v2 Installation
 -----------------------
 
