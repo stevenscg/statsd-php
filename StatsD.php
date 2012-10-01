@@ -87,6 +87,25 @@ class StatsD {
     }
 
     /**
+     * A "Set" is a count of unique events.
+     * This data type acts like a counter, but supports counting
+     * of unique occurences of values between flushes. The backend
+     * receives the number of unique events that happened since
+     * the last flush.
+     *
+     * The reference use case involved tracking the number of active
+     * and logged in users by sending the current userId of a user
+     * with each request with a key of "uniques" (or similar).
+     *
+     * @param string|array $stats The metric(s) to set.
+     * @param float $value The value for the stats.
+     * @param float|1 $sampleRate the rate (0-1) for sampling.
+     **/
+    public static function set($stats, $value, $sampleRate=1) {
+        StatsD::updateStats($stats, $value, $sampleRate, 's');
+    }
+
+    /**
      * Increments one or more stats counters
      *
      * @param string|array $stats The metric(s) to increment.
@@ -114,7 +133,7 @@ class StatsD {
      * @param string|array $stats The metric(s) to update. Should be either a string or array of metrics.
      * @param int|1 $delta The amount to increment/decrement each metric by.
      * @param float|1 $sampleRate the rate (0-1) for sampling.
-     * @param string|c $metric The metric type ("c" for count, "ms" for timing, "g" for gauge)
+     * @param string|c $metric The metric type ("c" for count, "ms" for timing, "g" for gauge, "s" for set)
      * @return boolean
      **/
     public static function updateStats($stats, $delta=1, $sampleRate=1, $metric='c') {
