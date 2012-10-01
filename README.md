@@ -36,18 +36,18 @@ models, or views if desired.
 1) Copy the StatsD.php class into app/Lib
 
 2) Make it available to all controllers by adding to the top of app/Controllers/AppController.php:
-App::uses('StatsD', 'Lib');
+	App::uses('StatsD', 'Lib');
 
 2) (Optional) Update app/Config/bootstrap.php if you want to use any of the configuration options:
-Configure::write('StatsD', array(
-	'enabled' => true,
-	'prefix' => 'your-app-name',
-	'host' => 'your-carbon-server',
-	'port' => XXXX
-));
+	Configure::write('StatsD', array(
+		'enabled' => true,
+		'prefix' => 'your-app-name',
+		'host' => 'your-carbon-server',
+		'port' => XXXX
+	));
 
 3) (Optional) Add the following line to your beforeFilter in app/Controllers/AppController.php:
-StatsD::config(Configure::read('StatsD'));
+	StatsD::config(Configure::read('StatsD'));
 
 
 CakePHP v2 Usage
@@ -58,10 +58,14 @@ contain all of the metrics for the app within the same "bucket" in Graphite.
 
 Example: Counting login actions (successful vs failed) in a UsersController:
 
-	if (!$this->Auth->login()) {
-	  StatsD::increment("logins.failed");
-	  $this->Session->setFlash(__('Login failed.  Please try again'));
-	  return;
+	function login() {
+	  ...
+	  if (!$this->Auth->login()) {
+	    StatsD::increment("logins.failed");
+	    $this->Session->setFlash(__('Login failed.  Please try again'));
+	    return;
+	  }
+	  StatsD::increment("logins.ok");
+	  ...
 	}
-	StatsD::increment("logins.ok");
 
