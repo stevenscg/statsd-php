@@ -34,9 +34,9 @@ StatsD Data Types and Class Methods
 
 * Sampling - supported via "sampleRate" parameter on `increment` and `decrement`
 
-* Gauges - not currently supported
+* Gauges - `gauge`
 
-* Sets - not currently supported
+* Sets - `set`
 
 
 
