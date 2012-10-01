@@ -133,7 +133,7 @@ class StatsD {
      * @param string|c $metric The metric type ("c" for count, "ms" for timing, "g" for gauge, "s" for set)
      * @return boolean
      **/
-    public static function updateStats($stats, $delta=1, $sampleRate=1, $metric='c') {
+    protected static function updateStats($stats, $delta=1, $sampleRate=1, $metric='c') {
         if (!is_array($stats)) { $stats = array($stats); }
         $data = array();
         foreach($stats as $stat) {
@@ -146,7 +146,7 @@ class StatsD {
     /*
      * Squirt the metrics over UDP
      **/
-    public static function send($data, $sampleRate=1) {
+    protected static function send($data, $sampleRate=1) {
         // check that sending is actually enabled
         if (self::$enabled === false) { return; }
 
