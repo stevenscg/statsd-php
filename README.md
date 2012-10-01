@@ -16,13 +16,13 @@ License: MIT
 Options
 -------
 
-* `enabled` - boolean - Set to false to disable UDP transmission (default: true)
+`enabled` - boolean - Set to false to disable UDP transmission (default: true)
 
-* `prefix` - string - Apply a global namespace to all metrics from this application
+`prefix` - string - Apply a global namespace to all metrics from this application
 
-* `host` - string - Hostname or IP of your carbon/graphite server
+`host` - string - Hostname or IP of your carbon/graphite server
 
-* `port` - integer - StatsD port on your carbon/graphite server
+`port` - integer - StatsD port of your carbon/graphite server
 
 
 CakePHP v2 Installation
@@ -57,11 +57,11 @@ Class methods are called statically.  Use the prefix option to keep your code cl
 contain all of the metrics for the app within the same "bucket" in Graphite.
 
 Example: Counting login actions (successful vs failed) in a UsersController:
-`
-if (!$this->Auth->login()) {
-  StatsD::increment("logins.failed");
-  $this->Session->setFlash(__('Login failed.  Please try again'));
-  return;
-}
-StatsD::increment("logins.ok");
-`
+
+	if (!$this->Auth->login()) {
+	  StatsD::increment("logins.failed");
+	  $this->Session->setFlash(__('Login failed.  Please try again'));
+	  return;
+	}
+	StatsD::increment("logins.ok");
+
