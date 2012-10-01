@@ -69,10 +69,9 @@ class StatsD {
      *
      * @param string|array $stats The metric(s) to set.
      * @param float $time The elapsed time (ms) to log
-     * @param float|1 $sampleRate the rate (0-1) for sampling.
      **/
-    public static function timing($stats, $time, $sampleRate=1) {
-        StatsD::updateStats($stats, $time, $sampleRate, 'ms');
+    public static function timing($stats, $time) {
+        StatsD::updateStats($stats, $time, 1, 'ms');
     }
 
     /**
@@ -80,10 +79,9 @@ class StatsD {
      *
      * @param string|array $stats The metric(s) to set.
      * @param float $value The value for the stats.
-     * @param float|1 $sampleRate the rate (0-1) for sampling.
      **/
-    public static function gauge($stats, $value, $sampleRate=1) {
-        StatsD::updateStats($stats, $value, $sampleRate, 'g');
+    public static function gauge($stats, $value) {
+        StatsD::updateStats($stats, $value, 1, 'g');
     }
 
     /**
@@ -99,10 +97,9 @@ class StatsD {
      *
      * @param string|array $stats The metric(s) to set.
      * @param float $value The value for the stats.
-     * @param float|1 $sampleRate the rate (0-1) for sampling.
      **/
-    public static function set($stats, $value, $sampleRate=1) {
-        StatsD::updateStats($stats, $value, $sampleRate, 's');
+    public static function set($stats, $value) {
+        StatsD::updateStats($stats, $value, 1, 's');
     }
 
     /**
