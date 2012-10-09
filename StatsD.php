@@ -48,6 +48,10 @@ class StatsD {
      *
      **/
     public static function config($params = array()) {
+        if (empty($params)) {
+            return;
+        }
+
         extract($params);
 
         if (!empty($host)) {
