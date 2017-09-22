@@ -1,5 +1,5 @@
 <?php
-namespace Stevenscg\StatsD;
+namespace Stevenscg;
 
 /**
  * Sends statistics to the statsd daemon over UDP
