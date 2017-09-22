@@ -1,0 +1,14 @@
+{
+    "name": "stevenscg/statsd-php",
+    "description": "Sends statistics to a statsd daemon over UDP",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Stevenscg\\": "src/"
+        }
+    }
+}

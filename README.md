@@ -1,20 +1,28 @@
-PHP Class for StatsD 
+PHP Class for StatsD
 ====================
 
-Send statistics to the stats daemon over UDP.
+Send statistics to the statsd daemon over UDP.
 
 This class generally follows the official php-example from Etsy, but moves the
 configuration options into the main class with reasonable defaults.  This should
 make incorporation into framework-based applications more straightforward.
 
-Upstream:
-https://github.com/etsy/statsd/blob/master/examples/php-example.php
 
-License: MIT
+Installation
+------------
+
+Installation is via composer:
+```
+composer require stevenscg/statsd-php
+```
 
 
-Options
--------
+Configuration
+-------------
+
+The library can be configured by calling `StatsD::config($params)`.
+
+`$params` is an array that supports the following keys:
 
 `enabled` - boolean - Set to false to disable UDP transmission (default: true)
 
@@ -23,6 +31,15 @@ Options
 `host` - string - Hostname or IP of your carbon/graphite server
 
 `port` - integer - StatsD port of your carbon/graphite server
+
+
+The library can also be configured via environment variables:
+
+`STATSD_ENABLED` - A boolean-like string (i.e. true, false, 1, 0)
+
+`STATSD_PREFIX` - string
+
+`STATSD_ADDR` - string - Example: 127.0.0.1:8125
 
 
 StatsD Data Types and Class Methods
@@ -39,51 +56,31 @@ StatsD Data Types and Class Methods
 * Sets - `set`
 
 
+Usage
+-----
 
-CakePHP v2 Installation
------------------------
+All methods are declared as static as they were in the upstream project.
 
-This class is generic enough that we can use it directly with CakePHP as as library.  The
-installation instructions below assume that we want StatsD capability in all of
-our controllers, but it could applied more precisely to only the required controllers,
-models, or views if desired.
-
-1) Copy the StatsD.php class into app/Lib
-
-2) Make it available to all controllers by adding to the top of app/Controllers/AppController.php:
-
-	App::uses('StatsD', 'Lib');
-
-2) (Optional) Update app/Config/bootstrap.php if you want to use any of the configuration options:
-
-	Configure::write('StatsD', array(
-		'enabled' => true,
-		'prefix' => 'your-app-name',
-		'host' => 'your-carbon-server',
-		'port' => XXXX
-	));
-
-3) (Optional) Add the following line to your beforeFilter in app/Controllers/AppController.php:
-
-	StatsD::config(Configure::read('StatsD'));
+Incrementing a counter is as simple as:
+```
+StatsD::increment("api.requests");
+```
 
 
-CakePHP v2 Usage
-----------------
+Example: Tracking logins and failures
 
-Class methods are called statically.  Use the prefix option to keep your code clean and 
-contain all of the metrics for the app within the same "bucket" in Graphite.
+    function login() {
+      ...
+      if (!$this->Auth->login()) {
+        StatsD::increment("logins.failed");
+        return;
+      }
+      StatsD::increment("logins.ok");
+      ...
+    }
 
-Example: Counting login actions (successful vs failed) in a UsersController:
 
-	function login() {
-	  ...
-	  if (!$this->Auth->login()) {
-	    StatsD::increment("logins.failed");
-	    $this->Session->setFlash(__('Login failed.  Please try again'));
-	    return;
-	  }
-	  StatsD::increment("logins.ok");
-	  ...
-	}
+License
+-------
 
+MIT
